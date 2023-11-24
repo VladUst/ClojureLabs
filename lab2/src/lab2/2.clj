@@ -3,7 +3,7 @@
 
 (defn calc-partial-sum [func h]
   (letfn [(area [cur-x]
-            (calc-area func cur-x (+ cur-x h)))]
+            (calc-area func cur-x (+ cur-x h) h))]
     (reductions +
                 0
                 (map area

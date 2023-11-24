@@ -1,0 +1,1 @@
+["^ ","~$lazy-parallel-filter",["^ ","~:row",4,"~:col",1,"~:fixed-arities",["~#set",[4]],"~:name","^0","~:ns","~$lab3.2","~:top-ns","^7","~:arities",["^ ","~i4",["^ ","~:ret","~:sequential","~:arglist-str","[pred block-size threads coll]"]],"~:type","~:fn"],"~:filename","D:\\PROJECTS\\ClojureLabs\\lab3\\src\\lab3\\2.clj"]

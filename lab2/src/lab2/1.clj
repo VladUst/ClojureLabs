@@ -1,19 +1,23 @@
 (ns lab2.1)
 
-(defn calc-area [f x y]
-  (let [h (- y x)]
-    (* (/ (+ (f x) (f y)) 2) h)))
+(defn calc-area [f x y h]
+  (* (/ (+ (f x) (f y)) 2) h))
 
-(defn integrate-segment [func h x]
-  (let [y (+ x h)]
-    (calc-area func x y)))
-
-(defn integrate [func h x]
-  (if (> x 0)
-    (+ (integrate-segment func h x)
-       (integrate func h (- x h)))
-    0))
+(defn integrate-with-memo [f h]
+  (memoize (fn [n]
+             (let [x (* (dec n) h)
+                   y (* n h)]
+               (if (> n 0)
+                 (+
+                  ((integrate-with-memo f h) (dec n))
+                  (calc-area f x y (- y x)))
+                 0)))))
 
 (defn calculate-integral-with-memo [func h]
-  (let [memoized-integrate (memoize (fn [x] (integrate func h x)))]
-    memoized-integrate))
+  (let [memoized-integrate (integrate-with-memo func h)]
+    (fn [x] (let [n-parts (int (/ x h))
+                  end-point-after-discretization (* h n-parts)
+                  rest-area (calc-area func x end-point-after-discretization (- x end-point-after-discretization))]
+              (+
+               (memoized-integrate n-parts)
+               rest-area)))))
